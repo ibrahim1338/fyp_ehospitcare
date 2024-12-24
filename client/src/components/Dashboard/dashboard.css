@@ -1,0 +1,83 @@
+.card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    overflow: hidden;
+    width: 280px;
+    height: 150px;
+    border-bottom: 6px solid #1976D2;
+  }
+  
+  .card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+
+  }
+  
+  .card-number-title {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-number {
+    font-size: 32px;
+    color: #1976D2; /* Blue color */
+    font-weight: bold;
+    padding: 15px;
+  }
+  
+  .card-title {
+    padding-left: 15px;
+    font-size: 18px;
+    color: #333;
+    margin-top: 5px;
+  }
+  
+  .card-image {
+    width: 150px;
+    height: auto;
+  }
+  
+  .card-footer-line {
+    height: 8px;
+    background-color: #1976D2; /* Blue color for footer */
+    
+  }
+  
+
+  /*Calender CSS*/
+  /* h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #1976D2;
+    display: flex;
+    align-items: center;
+  } */
+  
+  .rbc-toolbar button {
+    background-color: #1976D2;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: none;
+    margin: 0 5px;
+    width: fit-content;
+  }
+  
+  .rbc-toolbar button:hover {
+    background-color: #004ba0;
+  }
+  
+  .rbc-calendar {
+    border: 1px solid #ddd;
+  }
+  
+  .rbc-month-row, .rbc-day-slot {
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
