@@ -27,6 +27,16 @@ import DoctorOperations from './components/Doctor-Page/DoctorOperations'
 import DoctorBirthReports from './components/Doctor-Page/DoctorBirthReports'
 import DoctorDeathReports from './components/Doctor-Page/DoctorDeathReports'
 import DoctorProfile from './components/Doctor-Page/DoctorProfile'
+import AdminDashboard from './components/Admin-Page/AdminDashboard';
+import AdminDepartments from './components/Admin-Page/AdminDepartments';
+import AdminDoctors from './components/Admin-Page/AdminDoctors';
+import AdminPharmacists from './components/Admin-Page/AdminPharmacists';
+import AdminLaboratorists from './components/Admin-Page/AdminLaboratorists';
+import AdminReceptionists from './components/Admin-Page/AdminReceptionists';
+import AdminOperations from './components/Admin-Page/AdminOperations';
+import AdminBirthReports from './components/Admin-Page/AdminBirthReports';
+import AdminDeathReports from './components/Admin-Page/AdminDeathReports';
+import AdminProfile from './components/Admin-Page/AdminProfile';
 
 
 export default function App() {
@@ -46,11 +56,22 @@ const disptch=useDispatch()
               <Route path='/' element={<UserLayout/>} >
               <Route index element={<Home/>}/>
               </Route>
-
+           
+              {/* admin routes */}
               <Route path='/admin' element={<AdminLaouts/>}>
-              <Route index element={<Admin/>}/>
+              <Route index element={<AdminDashboard/>}/>
+              <Route path='/admin/departments' element={<AdminDepartments/>} />
+              <Route path='/admin/doctors' element={<AdminDoctors/>} />
+              <Route path='/admin/pharmacists' element={<AdminPharmacists/>} />
+              <Route path='/admin/laboratorists' element={<AdminLaboratorists/>} />
+              <Route path='/admin/receptionists' element={<AdminReceptionists/>} />
+              <Route path='/admin/operations' element={<AdminOperations/>} />
+              <Route path='/admin/birth-report' element={<AdminBirthReports/>} />
+              <Route path='/admin/death-report' element={<AdminDeathReports/>} />
+              <Route path='/admin/profile' element={<AdminProfile/>} />
               </Route>
-// doctor-routes
+
+{/*  doctor-routes */}
               <Route path='/doctor' element={<DoctorLayout/>}>
               <Route index element={<DoctorDashboard/>}/>
               <Route path='/doctor/prescriptions' element={<DoctorPrescriptions/>}/>
