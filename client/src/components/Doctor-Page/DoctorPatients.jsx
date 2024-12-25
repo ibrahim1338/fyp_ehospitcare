@@ -8,17 +8,15 @@ function DoctorPatients() {
       {/* Tab Buttons */}
       <div className="flex border-b-2 border-gray-200 mb-4">
         <button
-          className={`px-6 py-2 text-lg ${
-            activeTab === 'patients' ? 'border-b-4 border-blue-500 text-blue-500' : 'text-gray-600'
-          }`}
+          className={`px-6 py-2 text-lg ${activeTab === 'patients' ? 'border-b-4 border-blue-500 text-blue-500' : 'text-gray-600'
+            }`}
           onClick={() => setActiveTab('patients')}
         >
           Patients
         </button>
         <button
-          className={`px-6 py-2 text-lg ${
-            activeTab === 'addPatient' ? 'border-b-4 border-blue-500 text-blue-500' : 'text-gray-600'
-          }`}
+          className={`px-6 py-2 text-lg ${activeTab === 'addPatient' ? 'border-b-4 border-blue-500 text-blue-500' : 'text-gray-600'
+            }`}
           onClick={() => setActiveTab('addPatient')}
         >
           Add Patient
@@ -101,23 +99,23 @@ function DoctorPatients() {
               </div>
 
 
-{/* gender */}
+              {/* gender */}
               <div className='mb-2'>
-          <label className="block text-gray-700">Sex</label>
-          <select
-            name="Sex"
-            
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            required
-          >
-            
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
+                <label className="block text-gray-700">Sex</label>
+                <select
+                  name="Sex"
 
-        {/* Phone */}
+                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  required
+                >
+
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              {/* Phone */}
               <div className="mb-4">
                 <label className="block text-gray-700 mb-2" htmlFor="phone">
                   Phone
