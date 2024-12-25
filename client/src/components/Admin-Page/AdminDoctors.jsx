@@ -13,7 +13,6 @@ function AdminDoctors() {
     { id: 4, name: 'Dr. Tasawar', department: 'Pediatrics', phone: '123-456-7890', email: 'tasawar@example.com', experience: '5 years' },
     { id: 5, name: 'Dr. Shahid', department: 'Dermatology', phone: '123-456-7890', email: 'shahid@example.com', experience: '15 years' },
     { id: 6, name: 'Dr. Tuba', department: 'Radiology', phone: '123-456-7890', email: 'tuba@example.com', experience: '7 years' },
-    // Add more doctor records as needed
   ]);
 
   const filteredDoctors = doctors.filter((doctor) =>
