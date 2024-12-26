@@ -1,27 +1,55 @@
 import React, { useState } from 'react'
 
+
 function DoctorPatients() {
   const [activeTab, setActiveTab] = useState('patients');
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  // Sample data for patients
+  const patients = [
+    { id: 1, name: 'Cameron Stanley', cnic: '3450112345678', age: 23, sex: 'Male', phone: '03000000000', registrationDate: '2022-12-12' },
+    { id: 2, name: 'Sarah Lee', cnic: '3450112345679', age: 30, sex: 'Female', phone: '03000000001', registrationDate: '2023-01-10' },
+    { id: 3, name: 'John Doe', cnic: '3450112345680', age: 45, sex: 'Male', phone: '03000000002', registrationDate: '2021-05-05' },
+    // Add more patient data here
+  ];
+
+  // Filter patients based on search query
+  const filteredPatients = patients.filter(
+    patient =>
+      patient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      patient.cnic.includes(searchQuery)
+  );
 
   return (
     <div className="w-full p-4">
       {/* Tab Buttons */}
       <div className="flex border-b-2 border-gray-200 mb-4">
         <button
-          className={`px-6 py-2 text-lg ${activeTab === 'patients' ? 'border-b-4 border-blue-500 text-blue-500' : 'text-gray-600'
-            }`}
+          className={`px-6 py-2 text-lg ${activeTab === 'patients' ? 'border-b-4 border-blue-500 text-blue-500' : 'text-gray-600'}`}
           onClick={() => setActiveTab('patients')}
         >
           Patients
         </button>
         <button
-          className={`px-6 py-2 text-lg ${activeTab === 'addPatient' ? 'border-b-4 border-blue-500 text-blue-500' : 'text-gray-600'
-            }`}
+          className={`px-6 py-2 text-lg ${activeTab === 'addPatient' ? 'border-b-4 border-blue-500 text-blue-500' : 'text-gray-600'}`}
           onClick={() => setActiveTab('addPatient')}
         >
           Add Patient
         </button>
       </div>
+
+      {/* Search Input */}
+      {activeTab === 'patients' && (
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Search by Name or CNIC"
+            className="w-full px-4 py-2 border rounded-lg"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+          />
+        </div>
+      )}
 
       {/* Tab Content */}
       <div className='flex justify-center'>
@@ -41,20 +69,29 @@ function DoctorPatients() {
                 </tr>
               </thead>
               <tbody>
-                {/* Add patient rows here */}
-                <tr>
-                  <td className="px-4 py-2 border-b border-gray-200">1</td>
-                  <td className="px-4 py-2 border-b border-gray-200">Cameron Stanley</td>
-                  <td className="px-4 py-2 border-b border-gray-200">3450112345678</td>
-                  <td className="px-4 py-2 border-b border-gray-200">23</td>
-                  <td className="px-4 py-2 border-b border-gray-200">Male</td>
-                  <td className="px-4 py-2 border-b border-gray-200">03000000000</td>
-                  <td className="px-4 py-2 border-b border-gray-200">2022-12-12</td>
-                  <td className="flex gap-5 px-4 py-2 border-b border-gray-200">
-                    <button className="bg-blue-500 text-white px-4 py-1 rounded-lg mr-2">Edit</button>
-                    <button className="bg-red-500 text-white px-4 py-1 rounded-lg">Delete</button>
-                  </td>
-                </tr>
+                {filteredPatients.length > 0 ? (
+                  filteredPatients.map((patient, index) => (
+                    <tr key={patient.id}>
+                      <td className="px-4 py-2 border-b border-gray-200">{index + 1}</td>
+                      <td className="px-4 py-2 border-b border-gray-200">{patient.name}</td>
+                      <td className="px-4 py-2 border-b border-gray-200">{patient.cnic}</td>
+                      <td className="px-4 py-2 border-b border-gray-200">{patient.age}</td>
+                      <td className="px-4 py-2 border-b border-gray-200">{patient.sex}</td>
+                      <td className="px-4 py-2 border-b border-gray-200">{patient.phone}</td>
+                      <td className="px-4 py-2 border-b border-gray-200">{patient.registrationDate}</td>
+                      <td className="flex gap-5 px-4 py-2 border-b border-gray-200">
+                        <button className="bg-blue-500 text-white px-4 py-1 rounded-lg mr-2">Edit</button>
+                        <button className="bg-red-500 text-white px-4 py-1 rounded-lg">Delete</button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="8" className="px-4 py-2 border-b border-gray-200 text-center">
+                      No patients found.
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -83,7 +120,7 @@ function DoctorPatients() {
                   type="number"
                   id="cnic"
                   className="w-full px-4 py-2 border rounded-lg"
-                  placeholder="Enter age"
+                  placeholder="Enter CNIC"
                 />
               </div>
               <div className="mb-4">
@@ -97,24 +134,19 @@ function DoctorPatients() {
                   placeholder="Enter age"
                 />
               </div>
-
-
-              {/* gender */}
+              {/* Gender */}
               <div className='mb-2'>
                 <label className="block text-gray-700">Sex</label>
                 <select
                   name="Sex"
-
                   className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                   required
                 >
-
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                   <option value="Other">Other</option>
                 </select>
               </div>
-
               {/* Phone */}
               <div className="mb-4">
                 <label className="block text-gray-700 mb-2" htmlFor="phone">
@@ -128,7 +160,6 @@ function DoctorPatients() {
                 />
               </div>
 
-
               <button type="submit" className="bg-blue-500 text-white px-6 py-2 rounded-lg">
                 Add Patient
               </button>
@@ -140,4 +171,4 @@ function DoctorPatients() {
   );
 }
 
-export default DoctorPatients
+export default DoctorPatients;
