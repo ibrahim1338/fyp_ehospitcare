@@ -11,8 +11,11 @@
             if (user.role === 'admin') {
                 navigate('/admin');  // Redirect admin to the admin-specific area
             } else if(user.role === 'doctor'){
-                navigate('/doctor');      // Redirect logged-in non-admin users to the general home page
+                navigate('/doctor');      // direct logged-in doctors  to the doctor page
             }
+            else if(user.role === 'receptionist'){
+                navigate('/receptionist');      // direct logged-in receptionist  to the reception page
+                            }
             else{
                 navigate('/')
             }

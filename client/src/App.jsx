@@ -37,6 +37,11 @@ import AdminOperations from './components/Admin-Page/AdminOperations';
 import AdminBirthReports from './components/Admin-Page/AdminBirthReports';
 import AdminDeathReports from './components/Admin-Page/AdminDeathReports';
 import AdminProfile from './components/Admin-Page/AdminProfile';
+import ReceptionistLayout from './Layouts/ReceptionistLayout';
+import ReceptionistDashboard from './components/Receptionist-Page/ReceptionistDashboard';
+import ReceptionistPatients from './components/Receptionist-Page/ReceptionistPatients';
+import ReceptionistAppointnents from './components/Receptionist-Page/ReceptionistAppointnents';
+import ReceptionistProfile from './components/Receptionist-Page/ReceptionistProfile';
 
 
 export default function App() {
@@ -87,6 +92,16 @@ const disptch=useDispatch()
               <Route path='/doctor/profile' element={<DoctorProfile/>}/>
               </Route>
 
+{/* receptionist Routes */}
+
+              <Route path='/receptionist' element={<ReceptionistLayout/>}>
+              <Route index element={<ReceptionistDashboard/>} />
+              <Route path='/receptionist/patients' element={<ReceptionistPatients/>} />
+              <Route path='/receptionist/appointments' element={<ReceptionistAppointnents/>} />
+              <Route path='/receptionist/profile' element={<ReceptionistProfile/>} />
+              </Route>
+
+{/* public layout */}
               <Route path='/' element={<PublicLayouts/>}>
               <Route path='login' element={<Login/>}/>
               <Route path='register' element={<Register/>}/>

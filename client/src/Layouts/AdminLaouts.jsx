@@ -8,6 +8,8 @@ import { MdLocalPharmacy } from "react-icons/md";
 import { RiTestTubeFill } from "react-icons/ri";
 import SidebarBtn from '../components/Sidebar/SidebarBtn';
 import Header from '../components/Header/Header';
+import { post } from '../services/ApiEndpoint';
+import { Logout } from '../redux/AuthSlice';
 
 export default function AdminLaouts() {
   const user=useSelector((state) => state.Auth.user)
