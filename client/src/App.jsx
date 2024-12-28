@@ -42,6 +42,11 @@ import ReceptionistDashboard from './components/Receptionist-Page/ReceptionistDa
 import ReceptionistPatients from './components/Receptionist-Page/ReceptionistPatients';
 import ReceptionistAppointnents from './components/Receptionist-Page/ReceptionistAppointnents';
 import ReceptionistProfile from './components/Receptionist-Page/ReceptionistProfile';
+import LaboratoristLayout from './Layouts/LaboratoristLayout';
+import LaboratoristDashboard from './components/Laboratorist-Page/LaboratoristDashboard';
+import LaboratoristPatients from './components/Laboratorist-Page/LaboratoristPatients';
+import LaboratoristPatientTests from './components/Laboratorist-Page/LaboratoristPatientTests';
+import LaboratoristProfile from './components/Laboratorist-Page/LaboratoristProfile';
 
 
 export default function App() {
@@ -100,6 +105,14 @@ const disptch=useDispatch()
               <Route path='/receptionist/appointments' element={<ReceptionistAppointnents/>} />
               <Route path='/receptionist/profile' element={<ReceptionistProfile/>} />
               </Route>
+
+  {/* Laboratorist routes */}
+        <Route path='/laboratorist' element={<LaboratoristLayout/>}>
+        <Route index element={<LaboratoristDashboard/>}/>
+        <Route path='/laboratorist/patients' element={<LaboratoristPatients/>}/>
+        <Route path='/laboratorist/patientTests' element={<LaboratoristPatientTests/>}/>
+        <Route path='/laboratorist/profile' element={<LaboratoristProfile/>}/>
+        </Route>
 
 {/* public layout */}
               <Route path='/' element={<PublicLayouts/>}>

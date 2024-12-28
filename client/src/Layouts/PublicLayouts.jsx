@@ -15,7 +15,11 @@
             }
             else if(user.role === 'receptionist'){
                 navigate('/receptionist');      // direct logged-in receptionist  to the reception page
-                            }
+            }
+            else if(user.role === 'laboratorist'){
+                navigate('/laboratorist');      // direct logged-in receptionist  to the reception page
+
+            }
             else{
                 navigate('/')
             }
