@@ -52,6 +52,11 @@ import PharmacistDashboard from './components/Pharmacist-Page/PharmacistDashboar
 import PharmacistPatients from './components/Pharmacist-Page/PharmacistPatients';
 import PharmacistProvideMed from './components/Pharmacist-Page/PharmacistProvideMed';
 import PharmacistProfile from './components/Pharmacist-Page/PharmacistProfile';
+import RadiologistLayout from './Layouts/RadiologistLayout';
+import RadiologistDashboard from './components/Radiologist-Page/RadiologistDashboard';
+import RadiologistPatients from './components/Radiologist-Page/RadiologistPatients';
+import RadiologistScans from './components/Radiologist-Page/RadiologistScans';
+import RadiologistProfile from './components/Radiologist-Page/RadiologistProfile';
 
 
 export default function App() {
@@ -127,7 +132,13 @@ const disptch=useDispatch()
         <Route path='/pharmacist/provideMed' element={<PharmacistProvideMed/>}/>
         <Route path='/pharmacist/profile' element={<PharmacistProfile/>}/>
         </Route>
-
+{/* Radiologist routes */}
+        <Route path='/radiologist' element={<RadiologistLayout/>}>
+            <Route index element={<RadiologistDashboard/>}/>
+            <Route path='/radiologist/patients' element={<RadiologistPatients/>}/>
+            <Route path='/radiologist/scans' element={<RadiologistScans/>}/>
+            <Route path='/radiologist/profile' element={<RadiologistProfile/>}/>
+        </Route>
 {/* public layout */}
               <Route path='/' element={<PublicLayouts/>}>
               <Route path='login' element={<Login/>}/>

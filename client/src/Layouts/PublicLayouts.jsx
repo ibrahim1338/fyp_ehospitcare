@@ -24,6 +24,10 @@
                 navigate('/pharmacist');      // direct logged-in pharmacist  to the phamacist page
 
             }
+            else if(user.role === 'radiologist'){
+                navigate('/radiologist');      // direct logged-in radiologist  to the radiologist page
+
+            }
             else{
                 navigate('/')
             }
