@@ -47,6 +47,11 @@ import LaboratoristDashboard from './components/Laboratorist-Page/LaboratoristDa
 import LaboratoristPatients from './components/Laboratorist-Page/LaboratoristPatients';
 import LaboratoristPatientTests from './components/Laboratorist-Page/LaboratoristPatientTests';
 import LaboratoristProfile from './components/Laboratorist-Page/LaboratoristProfile';
+import PharmacistLayout from './Layouts/PharmacistLayout';
+import PharmacistDashboard from './components/Pharmacist-Page/PharmacistDashboard';
+import PharmacistPatients from './components/Pharmacist-Page/PharmacistPatients';
+import PharmacistProvideMed from './components/Pharmacist-Page/PharmacistProvideMed';
+import PharmacistProfile from './components/Pharmacist-Page/PharmacistProfile';
 
 
 export default function App() {
@@ -112,6 +117,15 @@ const disptch=useDispatch()
         <Route path='/laboratorist/patients' element={<LaboratoristPatients/>}/>
         <Route path='/laboratorist/patientTests' element={<LaboratoristPatientTests/>}/>
         <Route path='/laboratorist/profile' element={<LaboratoristProfile/>}/>
+        </Route>
+
+ {/* Pharmacist Routes  */}
+
+        <Route path='/pharmacist' element={<PharmacistLayout/>}>
+        <Route index element={<PharmacistDashboard/>}/>
+        <Route path='/pharmacist/patients' element={<PharmacistPatients/>}/>
+        <Route path='/pharmacist/provideMed' element={<PharmacistProvideMed/>}/>
+        <Route path='/pharmacist/profile' element={<PharmacistProfile/>}/>
         </Route>
 
 {/* public layout */}

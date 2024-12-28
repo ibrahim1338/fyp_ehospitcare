@@ -17,7 +17,11 @@
                 navigate('/receptionist');      // direct logged-in receptionist  to the reception page
             }
             else if(user.role === 'laboratorist'){
-                navigate('/laboratorist');      // direct logged-in receptionist  to the reception page
+                navigate('/laboratorist');      // direct logged-in laboratorist  to the laboratorist page
+
+            }
+            else if(user.role === 'pharmacist'){
+                navigate('/pharmacist');      // direct logged-in pharmacist  to the phamacist page
 
             }
             else{
