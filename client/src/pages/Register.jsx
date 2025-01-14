@@ -23,28 +23,84 @@ export default function Register() {
   }
   return (
     <>
-          <div className='register-container'>
-            <h2>Register</h2>
-               <form action="" onSubmit={handleSubmit}>
-               <div className='input-group'>
-                <label htmlFor="username">Username</label>
-                <input type="text"
-                onChange={(e)=> setName(e.target.value)} name="" id="username" />
-               </div>
-               <div className='input-group'>
-                <label htmlFor="email">Emaiil</label>
-                <input type="email" name="" onChange={(e)=>setEmail(e.target.value)} id="email" />
-               </div>
-               <div className='input-group'>
-                <label htmlFor="password">Password</label>
-                <input type="password" onChange={(e)=>setPassword(e.target.value)} name="" id="password" />
-               </div>
-               <button type='submit' className='bg-red-500 p-1.5 text-white'>Register</button>
-               <p className='register-link'>
-               Already have an account? <Link to={'/login'}>Login here</Link>
-                </p>
-               </form>
+         <div
+      className="min-h-screen flex items-center justify-center bg-cover bg-center"
+      style={{
+        backgroundImage: "url('/assets/registerbg.jpg')", // Replace with your image path
+      }}
+    >
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-sm">
+        <h1 className="text-2xl font-bold text-center text-red-500 mb-4">e-HospitCare</h1>
+        <h2 className="text-lg font-medium text-center mb-6">Register</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Username Input */}
+          <div>
+            <label htmlFor="username" className="block text-gray-700 font-medium mb-1">
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="Enter your username"
+              required
+            />
           </div>
+
+          {/* Email Input */}
+          <div>
+            <label htmlFor="email" className="block text-gray-700 font-medium mb-1">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          {/* Password Input */}
+          <div>
+            <label htmlFor="password" className="block text-gray-700 font-medium mb-1">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+
+          {/* Register Button */}
+          <button
+            type="submit"
+            className="w-full bg-red-500 text-white py-2 rounded-lg font-semibold hover:bg-red-600 transition"
+          >
+            Register
+          </button>
+        </form>
+
+        {/* Login Link */}
+        <div className="mt-4 text-center">
+          <p className="text-gray-600">
+            Already have an account?{' '}
+            <Link to="/login" className="text-blue-500 font-medium hover:underline">
+              Login here
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
 
 
 
