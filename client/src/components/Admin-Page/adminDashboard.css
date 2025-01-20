@@ -1,20 +1,4 @@
-.DoctorDashboard-container {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-}
 
-.cards-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
 
-.cards-container > * {
-    flex: 1 1 calc(19% - 20px);
-    max-width: calc(19% - 20px);
-    box-sizing: border-box;
-}
+
+
