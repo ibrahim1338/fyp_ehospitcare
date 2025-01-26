@@ -57,6 +57,7 @@ import RadiologistDashboard from './components/Radiologist-Page/RadiologistDashb
 import RadiologistPatients from './components/Radiologist-Page/RadiologistPatients';
 import RadiologistScans from './components/Radiologist-Page/RadiologistScans';
 import RadiologistProfile from './components/Radiologist-Page/RadiologistProfile';
+import AdminSchedules from './components/Admin-Page/AdminSchedules';
 
 
 export default function App() {
@@ -85,6 +86,7 @@ const disptch=useDispatch()
               <Route path='/admin/pharmacists' element={<AdminPharmacists/>} />
               <Route path='/admin/laboratorists' element={<AdminLaboratorists/>} />
               <Route path='/admin/receptionists' element={<AdminReceptionists/>} />
+              <Route path='/admin/schedules' element={<AdminSchedules/>} />
               <Route path='/admin/operations' element={<AdminOperations/>} />
               <Route path='/admin/birth-report' element={<AdminBirthReports/>} />
               <Route path='/admin/death-report' element={<AdminDeathReports/>} />

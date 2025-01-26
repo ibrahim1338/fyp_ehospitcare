@@ -10,7 +10,7 @@ function CalenderComponent() {
       setDate(newDate);}
   return (
     <div style={{ padding: "20px" }}>
-      <h2 style={{ borderBottom: "2px solid #1976D2" }}>Calendar</h2>
+      <h1 style={{ borderBottom: "2px solid #1976D2", fontWeight:'bolder', fontSize:'1.5rem'}}>Calendar</h1>
       <Calendar
         localizer={localizer}
         events={[]} // You can add your events here

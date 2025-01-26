@@ -5,12 +5,13 @@ import { FaTachometerAlt,FaFileMedicalAlt, FaChild, FaSkull, FaUser} from "react
 import { HiBuildingLibrary } from "react-icons/hi2";
 import { FaUserDoctor,FaDesktop } from "react-icons/fa6";
 import { MdLocalPharmacy } from "react-icons/md";
-import { RiTestTubeFill } from "react-icons/ri";
+import { RiTestTubeFill,RiCalendarScheduleFill } from "react-icons/ri";
 import SidebarBtn from '../components/Sidebar/SidebarBtn';
 import Header from '../components/Header/Header';
 import { post } from '../services/ApiEndpoint';
 import { Logout } from '../redux/AuthSlice';
 import { IoReorderThreeSharp } from 'react-icons/io5';
+import toast from 'react-hot-toast';
 
 export default function AdminLaouts() {
   const user=useSelector((state) => state.Auth.user)
@@ -23,6 +24,7 @@ const handleLogout=async()=>{
      if (request.status==200) {
          disptach(Logout())
         navigate('/login')
+        toast.success(response.message)
      }
   } catch (error) {
     console.log(error)
@@ -55,6 +57,7 @@ const handleLogout=async()=>{
           <SidebarBtn label="Pharmacists" icon={<MdLocalPharmacy />} to="/admin/pharmacists" dispaly={`${isCollapsed ? 'hidden w-fit' : 'block w-10/12'}`}/>
           <SidebarBtn label="Laboratorists" icon={<RiTestTubeFill />} to="/admin/laboratorists" dispaly={`${isCollapsed ? 'hidden w-fit' : 'block w-10/12'}`}/>
           <SidebarBtn label="Receptionists" icon={<FaDesktop />} to="/admin/receptionists" dispaly={`${isCollapsed ? 'hidden w-fit' : 'block w-10/12'}`}/>
+          <SidebarBtn label="Schedules" icon={<RiCalendarScheduleFill />} to="/admin/schedules" dispaly={`${isCollapsed ? 'hidden w-fit' : 'block w-10/12'}`}/>
           <SidebarBtn label="Operations" icon={<FaFileMedicalAlt />} to="/admin/operations" dispaly={`${isCollapsed ? 'hidden w-fit' : 'block w-10/12'}`}/>
           <SidebarBtn label="Birth Report" icon={<FaChild />} to="/admin/birth-report" dispaly={`${isCollapsed ? 'hidden w-fit' : 'block w-10/12'}`}/>
           <SidebarBtn label="Death Report" icon={<FaSkull />} to="/admin/death-report" dispaly={`${isCollapsed ? 'hidden w-fit' : 'block w-10/12'}`}/>
