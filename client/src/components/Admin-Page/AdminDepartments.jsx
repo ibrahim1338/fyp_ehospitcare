@@ -41,8 +41,8 @@ function AdminDepartments() {
             <div className="mb-4">
               <input
                 type="text"
-                className="w-2/3 px-4 py-2 border rounded-lg"
-                placeholder="Search departments..."
+                className="w-1/3 px-4 py-2 border rounded-lg"
+                placeholder="Search doctors..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />

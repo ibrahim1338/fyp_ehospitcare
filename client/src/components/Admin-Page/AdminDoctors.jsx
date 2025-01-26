@@ -1,30 +1,89 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function AdminDoctors() {
   const [activeTab, setActiveTab] = useState('doctors');
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 8;
 
-  const [doctors] = useState([
-    { id: 1, name: 'Dr. Ali', department: 'Cardiology', phone: '123-456-7890', email: 'ali@example.com', experience: '10 years' },
-    { id: 2, name: 'Dr. Asad', department: 'Neurology', phone: '123-456-7890', email: 'asad@example.com', experience: '8 years' },
-    { id: 3, name: 'Dr. Bilal', department: 'Orthopedics', phone: '123-456-7890', email: 'bilal@example.com', experience: '12 years' },
-    { id: 4, name: 'Dr. Tasawar', department: 'Pediatrics', phone: '123-456-7890', email: 'tasawar@example.com', experience: '5 years' },
-    { id: 5, name: 'Dr. Shahid', department: 'Dermatology', phone: '123-456-7890', email: 'shahid@example.com', experience: '15 years' },
-    { id: 6, name: 'Dr. Tuba', department: 'Radiology', phone: '123-456-7890', email: 'tuba@example.com', experience: '7 years' },
-  ]);
+  const [doctors, setDoctors] = useState([]);
+
+  const fetchDoctors = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/api/doctors');
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Fetched doctors:', data);
+        setDoctors(data);
+      } else {
+        console.error('Failed to fetch doctors');
+      }
+    } catch (error) {
+      console.error('Error fetching doctors:', error);
+    }
+  };
+
+  useEffect(() => {
+    console.log('Current doctors state:', doctors);
+  }, [doctors]);
+
+  useEffect(() => {
+    fetchDoctors();
+  }, []);
+
+  const [newDoctor, setNewDoctor] = useState({
+    doctorId: '',
+    name: '',
+    department: '',
+    phone: '',
+    email: '',
+    experience: ''
+  });
 
   const filteredDoctors = doctors.filter((doctor) =>
-    doctor.name.toLowerCase().includes(searchQuery.toLowerCase())
+    doctor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    doctor.doctorId.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const totalPages = Math.ceil(filteredDoctors.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredDoctors.length / 8);
 
   const paginatedDoctors = filteredDoctors.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    (currentPage - 1) * 8,
+    currentPage * 8
   );
+
+  const handleAddDoctor = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:4000/api/doctors/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newDoctor)
+      });
+
+      if (response.ok) {
+        setNewDoctor({
+          doctorId: '',
+          name: '',
+          department: '',
+          phone: '',
+          email: '',
+          experience: ''
+        });
+        alert('Doctor added successfully!');
+        fetchDoctors();
+        setActiveTab('doctors');
+      } else {
+        const error = await response.json();
+        alert(error.message);
+      }
+    } catch (error) {
+      console.error('Error adding doctor:', error);
+      alert('Failed to add doctor');
+    }
+  };
 
   return (
     <div className="w-full p-4">
@@ -53,7 +112,7 @@ function AdminDoctors() {
               <input
                 type="text"
                 className="w-1/3 px-4 py-2 border rounded-lg"
-                placeholder="Search doctors..."
+                placeholder="Search by name or doctor ID..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -64,7 +123,7 @@ function AdminDoctors() {
               <table className="min-w-full bg-white border border-gray-300">
                 <thead>
                   <tr>
-                    <th className="px-4 py-2 border-b border-gray-200">#</th>
+                    <th className="px-4 py-2 border-b border-gray-200">ID</th>
                     <th className="px-4 py-2 border-b border-gray-200">Name</th>
                     <th className="px-4 py-2 border-b border-gray-200">Department</th>
                     <th className="px-4 py-2 border-b border-gray-200">Phone</th>
@@ -74,26 +133,31 @@ function AdminDoctors() {
                   </tr>
                 </thead>
                 <tbody>
-                  {paginatedDoctors.map((doctor, index) => (
-                    <tr key={doctor.id}>
-                      <td className="px-4 py-2 border-b border-gray-200">
-                        {(currentPage - 1) * itemsPerPage + index + 1}
-                      </td>
-                      <td className="px-4 py-2 border-b border-gray-200">{doctor.name}</td>
-                      <td className="px-4 py-2 border-b border-gray-200">{doctor.department}</td>
-                      <td className="px-4 py-2 border-b border-gray-200">{doctor.phone}</td>
-                      <td className="px-4 py-2 border-b border-gray-200">{doctor.email}</td>
-                      <td className="px-4 py-2 border-b border-gray-200">{doctor.experience}</td>
-                      <td className="flex gap-2 px-4 py-2 border-b border-gray-200">
-                        <button className="bg-blue-500 text-white px-4 py-1 rounded-lg">Edit</button>
-                        <button className="bg-red-500 text-white px-4 py-1 rounded-lg">Delete</button>
-                      </td>
-                    </tr>
-                  ))}
-                  {paginatedDoctors.length === 0 && (
+                  {doctors && doctors.length > 0 ? (
+                    doctors.map((doctor, index) => (
+                      <tr key={doctor._id || index} className="border-b border-gray-200">
+                        <td className="px-4 py-2 border-none">{doctor.doctorId}</td>
+                        <td className="px-4 py-2 border-none">{doctor.name}</td>
+                        <td className="px-4 py-2 border-none">{doctor.department}</td>
+                        <td className="px-4 py-2 border-none">{doctor.phone}</td>
+                        <td className="px-4 py-2 border-none">{doctor.email}</td>
+                        <td className="px-4 py-2 border-none">{doctor.experience}</td>
+                        <td className="px-4 py-2 border-none">
+                          <div className="flex gap-2">
+                            <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded-lg">
+                              Edit
+                            </button>
+                            <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-lg">
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
                     <tr>
                       <td colSpan="7" className="px-4 py-2 text-center text-gray-500">
-                        No doctors found.
+                        No doctors found
                       </td>
                     </tr>
                   )}
@@ -135,7 +199,20 @@ function AdminDoctors() {
         {activeTab === 'addDoctor' && (
           <div className="p-4 bg-gray-100 rounded-lg w-3/5">
             <h2 className="text-2xl mb-4">Add Doctor</h2>
-            <form>
+            <form onSubmit={handleAddDoctor}>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2" htmlFor="doctorId">
+                  Doctor ID
+                </label>
+                <input
+                  type="text"
+                  id="doctorId"
+                  value={newDoctor.doctorId}
+                  onChange={(e) => setNewDoctor({...newDoctor, doctorId: e.target.value})}
+                  className="w-full px-4 py-2 border rounded-lg"
+                  placeholder="Enter doctor ID"
+                />
+              </div>
               <div className="mb-4">
                 <label className="block text-gray-700 mb-2" htmlFor="name">
                   Name
@@ -143,6 +220,8 @@ function AdminDoctors() {
                 <input
                   type="text"
                   id="name"
+                  value={newDoctor.name}
+                  onChange={(e) => setNewDoctor({...newDoctor, name: e.target.value})}
                   className="w-full px-4 py-2 border rounded-lg"
                   placeholder="Enter doctor name"
                 />
@@ -154,6 +233,8 @@ function AdminDoctors() {
                 <input
                   type="text"
                   id="department"
+                  value={newDoctor.department}
+                  onChange={(e) => setNewDoctor({...newDoctor, department: e.target.value})}
                   className="w-full px-4 py-2 border rounded-lg"
                   placeholder="Enter department"
                 />
@@ -165,6 +246,8 @@ function AdminDoctors() {
                 <input
                   type="tel"
                   id="phone"
+                  value={newDoctor.phone}
+                  onChange={(e) => setNewDoctor({...newDoctor, phone: e.target.value})}
                   className="w-full px-4 py-2 border rounded-lg"
                   placeholder="Enter phone number"
                 />
@@ -176,6 +259,8 @@ function AdminDoctors() {
                 <input
                   type="email"
                   id="email"
+                  value={newDoctor.email}
+                  onChange={(e) => setNewDoctor({...newDoctor, email: e.target.value})}
                   className="w-full px-4 py-2 border rounded-lg"
                   placeholder="Enter email"
                 />
@@ -187,6 +272,8 @@ function AdminDoctors() {
                 <input
                   type="text"
                   id="experience"
+                  value={newDoctor.experience}
+                  onChange={(e) => setNewDoctor({...newDoctor, experience: e.target.value})}
                   className="w-full px-4 py-2 border rounded-lg"
                   placeholder="Enter experience (e.g., 10 years)"
                 />
