@@ -76,7 +76,7 @@ function DoctorPatients() {
   const filteredPatients = patients.filter(
     (patient) =>
       patient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      patient.address.toLowerCase().includes(searchQuery.toLowerCase())
+      patient.cnic.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const totalPages = Math.ceil(filteredPatients.length / itemsPerPage);
@@ -127,13 +127,14 @@ function DoctorPatients() {
                   <th className="px-4 py-2 border-b border-gray-200">Name</th>
                   <th className="px-4 py-2 border-b border-gray-200">CNIC</th>
                   <th className="px-4 py-2 border-b border-gray-200">Phone</th>
+                  
                   <th className="px-4 py-2 border-b border-gray-200">Gender</th>
                   <th className="px-4 py-2 border-b border-gray-200">Email</th>
                 </tr>
               </thead>
               <tbody>
                 {paginatedPatients.map((patient) => (
-                  <tr key={patient.name}>
+                  <tr key={patient.patientId}>
                     
                     <td className="px-4 py-2 border-b">{patient.name}</td>
                     <td className="px-4 py-2 border-b">{patient.cnic}</td>
