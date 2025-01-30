@@ -79,16 +79,19 @@ function DoctorPatients() {
     e.preventDefault();
     if (!editPatient) return;
 
-    const { invoiceNumber, ...updateData } = editPatient; // Extract invoiceNumber to prevent update
+    const { _id, ...updateData } = editPatient; // Use _id instead of invoiceNumber
 
     try {
-      const response = await fetch(`http://localhost:4000/api/patients/update/${invoiceNumber}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updateData), // Send only the fields to update
-      });
+      const response = await fetch(
+        `http://localhost:4000/api/patients/update/${_id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updateData), // Send only the fields to update
+        }
+      );
 
       if (response.ok) {
         alert("Patient updated successfully!");
@@ -106,16 +109,19 @@ function DoctorPatients() {
   };
 
   // Delete a patient
-  const handleDeletePatient = async (invoiceNumber) => {
+  const handleDeletePatient = async (_id) => {
     if (window.confirm("Are you sure you want to delete this patient?")) {
       try {
-        const response = await fetch(`http://localhost:4000/api/patients/delete/${invoiceNumber}`, {
-          method: "DELETE",
-        });
+        const response = await fetch(
+          `http://localhost:4000/api/patients/delete/${_id}`,
+          {
+            method: "DELETE",
+          }
+        );
 
         if (response.ok) {
           alert("Patient deleted successfully!");
-          setPatients(patients.filter(patient => patient.invoiceNumber !== invoiceNumber)); // Remove from local state
+          setPatients(patients.filter((patient) => patient._id !== _id)); // Remove from local state
         } else {
           const error = await response.json();
           alert(error.message);
@@ -126,7 +132,6 @@ function DoctorPatients() {
       }
     }
   };
-
   // Filtered and paginated patients
   const filteredPatients = patients.filter(
     (patient) =>
@@ -145,13 +150,21 @@ function DoctorPatients() {
       {/* Tab Buttons */}
       <div className="flex border-b-2 border-gray-200 mb-4">
         <button
-          className={`px-6 py-2 text-lg ${activeTab === "patients" ? "border-b-4 border-blue-500 text-blue-500" : "text-gray-600"}`}
+          className={`px-6 py-2 text-lg ${
+            activeTab === "patients"
+              ? "border-b-4 border-blue-500 text-blue-500"
+              : "text-gray-600"
+          }`}
           onClick={() => setActiveTab("patients")}
         >
           Patients
         </button>
         <button
-          className={`px-6 py-2 text-lg ${activeTab === "addPatient" ? "border-b-4 border-blue-500 text-blue-500" : "text-gray-600"}`}
+          className={`px-6 py-2 text-lg ${
+            activeTab === "addPatient"
+              ? "border-b-4 border-blue-500 text-blue-500"
+              : "text-gray-600"
+          }`}
           onClick={() => setActiveTab("addPatient")}
         >
           Add Patient
@@ -177,19 +190,25 @@ function DoctorPatients() {
             <table className="w-full table-auto">
               <thead>
                 <tr>
-                  <th className="px-4 py-2 border-b border-gray-200">Invoice #</th>
+                  <th className="px-4 py-2 border-b border-gray-200">
+                    Invoice #
+                  </th>
                   <th className="px-4 py-2 border-b border-gray-200">Name</th>
                   <th className="px-4 py-2 border-b border-gray-200">CNIC</th>
                   <th className="px-4 py-2 border-b border-gray-200">Phone</th>
                   <th className="px-4 py-2 border-b border-gray-200">Gender</th>
                   <th className="px-4 py-2 border-b border-gray-200">Email</th>
-                  <th className="px-4 py-2 border-b border-gray-200">Actions</th>
+                  <th className="px-4 py-2 border-b border-gray-200">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {paginatedPatients.map((patient) => (
                   <tr key={patient.invoiceNumber}>
-                    <td className="px-4 py-2 border-b">{patient.invoiceNumber}</td>
+                    <td className="px-4 py-2 border-b">
+                      {patient.invoiceNumber}
+                    </td>
                     <td className="px-4 py-2 border-b">{patient.name}</td>
                     <td className="px-4 py-2 border-b">{patient.cnic}</td>
                     <td className="px-4 py-2 border-b">{patient.phone}</td>
@@ -207,7 +226,7 @@ function DoctorPatients() {
                       </button>
                       <button
                         className="px-4 py-2 bg-red-500 text-white rounded-lg ml-2"
-                        onClick={() => handleDeletePatient(patient.invoiceNumber)}
+                        onClick={() => handleDeletePatient(patient._id)} // Use _id instead of invoiceNumber
                       >
                         Delete
                       </button>
@@ -245,7 +264,9 @@ function DoctorPatients() {
         {activeTab === "addPatient" && (
           <div className="w-full">
             {/* Add or Edit Patient Form */}
-            <form onSubmit={editPatient ? handleUpdatePatient : handleAddPatient}>
+            <form
+              onSubmit={editPatient ? handleUpdatePatient : handleAddPatient}
+            >
               <div className="mb-4">
                 <label className="block text-lg">Name</label>
                 <input
@@ -298,7 +319,10 @@ function DoctorPatients() {
                   value={editPatient ? editPatient.gender : newPatient.gender}
                   onChange={(e) =>
                     editPatient
-                      ? setEditPatient({ ...editPatient, gender: e.target.value })
+                      ? setEditPatient({
+                          ...editPatient,
+                          gender: e.target.value,
+                        })
                       : setNewPatient({ ...newPatient, gender: e.target.value })
                   }
                   required
@@ -313,8 +337,14 @@ function DoctorPatients() {
                   value={editPatient ? editPatient.address : newPatient.address}
                   onChange={(e) =>
                     editPatient
-                      ? setEditPatient({ ...editPatient, address: e.target.value })
-                      : setNewPatient({ ...newPatient, address: e.target.value })
+                      ? setEditPatient({
+                          ...editPatient,
+                          address: e.target.value,
+                        })
+                      : setNewPatient({
+                          ...newPatient,
+                          address: e.target.value,
+                        })
                   }
                   required
                 />
@@ -328,7 +358,10 @@ function DoctorPatients() {
                   value={editPatient ? editPatient.phone : newPatient.phone}
                   onChange={(e) =>
                     editPatient
-                      ? setEditPatient({ ...editPatient, phone: e.target.value })
+                      ? setEditPatient({
+                          ...editPatient,
+                          phone: e.target.value,
+                        })
                       : setNewPatient({ ...newPatient, phone: e.target.value })
                   }
                   required
@@ -343,7 +376,10 @@ function DoctorPatients() {
                   value={editPatient ? editPatient.email : newPatient.email}
                   onChange={(e) =>
                     editPatient
-                      ? setEditPatient({ ...editPatient, email: e.target.value })
+                      ? setEditPatient({
+                          ...editPatient,
+                          email: e.target.value,
+                        })
                       : setNewPatient({ ...newPatient, email: e.target.value })
                   }
                   required
